@@ -110,4 +110,29 @@ public class ListaDoble<T extends Comparable<T>> {
             cabeza = temporal.anterior;
         }
     }
+
+    // 📌 Problema 4: Eliminar duplicados
+    public void eliminarDuplicados() {
+        NodoDoble<T> actual = cabeza;
+        while (actual != null) {
+            NodoDoble<T> comparador = actual.siguiente;
+            while (comparador != null) {
+                if (actual.dato.equals(comparador.dato)) {
+                    NodoDoble<T> dup = comparador;
+                    comparador = comparador.siguiente;
+                    if (dup == cola) {
+                        cola = dup.anterior;
+                        cola.siguiente = null;
+                    } else {
+                        dup.anterior.siguiente = dup.siguiente;
+                        if (dup.siguiente != null)
+                            dup.siguiente.anterior = dup.anterior;
+                    }
+                } else {
+                    comparador = comparador.siguiente;
+                }
+            }
+            actual = actual.siguiente;
+        }
+    }
 }
