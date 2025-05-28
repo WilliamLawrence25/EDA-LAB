@@ -21,7 +21,7 @@ public class ListaDoble<T extends Comparable<T>> {
         }
     }
 
-    // 📌 Problema 1: Insertar al final
+    // 📌 PROBLEMA 1: Insertar al final
     public void insertarFinal(T dato) {
         NodoDoble<T> nuevo = new NodoDoble<>(dato);
         if (cola == null) {
@@ -37,7 +37,7 @@ public class ListaDoble<T extends Comparable<T>> {
     public void mostrarNormal() {
         NodoDoble<T> actual = cabeza;
         while (actual != null) {
-            System.out.print(actual.dato + " ⇄ ");
+            System.out.print(actual.dato + " <=> ");
             actual = actual.siguiente;
         }
         System.out.println("null");
@@ -47,13 +47,13 @@ public class ListaDoble<T extends Comparable<T>> {
     public void mostrarReverso() {
         NodoDoble<T> actual = cola;
         while (actual != null) {
-            System.out.print(actual.dato + " ⇄ ");
+            System.out.print(actual.dato + " <=> ");
             actual = actual.anterior;
         }
         System.out.println("null");
     }
 
-    // 📌 Problema 2: Eliminar por valor
+    // 📌 PROBLEMA 2: Eliminar por valor
     public void eliminarValor(T valor) {
         NodoDoble<T> actual = cabeza;
         while (actual != null) {
@@ -75,7 +75,7 @@ public class ListaDoble<T extends Comparable<T>> {
         }
     }
 
-    // 📌 Problema 2: Eliminar por posición
+    // 📌 PROBLEMA 2: Eliminar por posición
     public void eliminarPosicion(int pos) {
         if (pos < 0) return;
         NodoDoble<T> actual = cabeza;
@@ -100,7 +100,7 @@ public class ListaDoble<T extends Comparable<T>> {
         }
     }
 
-    // 📌 Problema 2: Eliminar primer elemento
+    // 📌 PROBLEMA 2: Eliminar primer elemento
     public void eliminarPrimero() {
         if (cabeza == null) return;
         cabeza = cabeza.siguiente;
@@ -108,7 +108,7 @@ public class ListaDoble<T extends Comparable<T>> {
         else cola = null;
     }
 
-    // 📌 Problema 2: Eliminar último elemento
+    // 📌 PROBLEMA 2: Eliminar último elemento
     public void eliminarUltimo() {
         if (cola == null) return;
         cola = cola.anterior;
@@ -116,7 +116,7 @@ public class ListaDoble<T extends Comparable<T>> {
         else cabeza = null;
     }
     
-    // 📌 Problema 3: Revertir la lista
+    // 📌 PROBLEMA 3: Revertir la lista
     public void invertir() {
         NodoDoble<T> actual = cabeza;
         NodoDoble<T> temporal = null;
@@ -133,7 +133,7 @@ public class ListaDoble<T extends Comparable<T>> {
         }
     }
 
-    // 📌 Problema 4: Eliminar duplicados
+    // 📌 PROBLEMA 4: Eliminar duplicados
     public void eliminarDuplicados() {
         NodoDoble<T> actual = cabeza;
         while (actual != null) {
@@ -158,7 +158,7 @@ public class ListaDoble<T extends Comparable<T>> {
         }
     }
 
-    // 📌 Problema 5: Insertar manteniendo orden
+    // 📌 PROBLEMA 5: Insertar manteniendo orden
     public void insertarOrdenado(T dato) {
         NodoDoble<T> nuevo = new NodoDoble<>(dato);
 
