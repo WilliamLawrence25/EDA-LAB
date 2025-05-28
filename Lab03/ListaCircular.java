@@ -46,4 +46,21 @@ public class ListaCircular {
         return contador;
     }
 
+    // ACTIVIDAD NRO 2: Metodo buscar un elemento
+    public boolean buscar(int dato) {
+        if (ultimo == null) {
+            return false; // Lista vacía
+        }
+        Nodo actual = ultimo.siguiente; // Comienza desde el primer nodo
+        do {
+            if (actual.dato == dato) {
+                return true; // Elemento encontrado
+            }
+            actual = actual.siguiente; // Avanza al siguiente nodo
+        } while (actual != ultimo.siguiente); // Termina cuando vuelve al inicio
+        return false; // Elemento no encontrado
+    }
+
+    
+
 }
