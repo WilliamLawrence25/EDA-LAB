@@ -53,6 +53,28 @@ public class ListaDoble<T extends Comparable<T>> {
         System.out.println("null");
     }
 
+    // 📌 Problema 2: Eliminar por valor
+    public void eliminarValor(T valor) {
+        NodoDoble<T> actual = cabeza;
+        while (actual != null) {
+            if (actual.dato.equals(valor)) {
+                if (actual == cabeza) {
+                    cabeza = actual.siguiente;
+                    if (cabeza != null) cabeza.anterior = null;
+                    else cola = null;
+                } else if (actual == cola) {
+                    cola = actual.anterior;
+                    cola.siguiente = null;
+                } else {
+                    actual.anterior.siguiente = actual.siguiente;
+                    actual.siguiente.anterior = actual.anterior;
+                }
+                return;
+            }
+            actual = actual.siguiente;
+        }
+    }
+
     // 📌 Problema 2: Eliminar por posición
     public void eliminarPosicion(int pos) {
         if (pos < 0) return;
