@@ -20,7 +20,7 @@ public class ListaCircularMain {
         listaStrings.mostrar();
         System.out.println("Cantidad de elementos: " + listaStrings.contar());
         System.out.println("¿Está 'Eula'? " + listaStrings.buscar("Eula"));
-        System.out.println("¿Está 'Cartethya'? " + listaStrings.buscar("Camellya"));
+        System.out.println("¿Está 'Camellya'? " + listaStrings.buscar("Camellya"));
         
     }
 }
