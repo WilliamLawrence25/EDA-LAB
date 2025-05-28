@@ -135,4 +135,24 @@ public class ListaDoble<T extends Comparable<T>> {
             actual = actual.siguiente;
         }
     }
+
+    // 📌 Problema 5: Insertar manteniendo orden
+    public void insertarOrdenado(T dato) {
+        NodoDoble<T> nuevo = new NodoDoble<>(dato);
+
+        if (cabeza == null || dato.compareTo(cabeza.dato) <= 0) {
+            insertarInicio(dato);
+        } else if (dato.compareTo(cola.dato) >= 0) {
+            insertarFinal(dato);
+        } else {
+            NodoDoble<T> actual = cabeza;
+            while (actual != null && dato.compareTo(actual.dato) > 0) {
+                actual = actual.siguiente;
+            }
+            nuevo.anterior = actual.anterior;
+            nuevo.siguiente = actual;
+            actual.anterior.siguiente = nuevo;
+            actual.anterior = nuevo;
+        }
+    }
 }
