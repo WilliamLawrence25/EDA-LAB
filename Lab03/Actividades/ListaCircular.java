@@ -1,9 +1,11 @@
 package Actividades;
 public class ListaCircular<T> {
     private Nodo<T> ultimo;
+    private int contador;
 
     public ListaCircular() {
         this.ultimo = null;
+        this.contador = 0;
     }  
 
     // Insertar un nodo al final
@@ -12,10 +14,12 @@ public class ListaCircular<T> {
         if (ultimo == null) {
             ultimo = nuevo;
             ultimo.siguiente = ultimo; // Apunta a sí mismo
+            contador++;
         } else {
             nuevo.siguiente = ultimo.siguiente; // Nuevo apunta al primer nodo
             ultimo.siguiente = nuevo; // Último apunta al nuevo nodo
             ultimo = nuevo; // Actualiza el último nodo
+            contador++;
         }
     }
 
@@ -35,7 +39,8 @@ public class ListaCircular<T> {
 
     // ACTIVIDAD NRO 1: Metodo para contar elementos
     public int contar() {
-        if (ultimo == null) {
+        return contador; // Retorna el contador de elementos
+        /*if (ultimo == null) {
             return 0; // Lista vacía
         }
         int contador = 0;
@@ -44,7 +49,7 @@ public class ListaCircular<T> {
             contador++;
             actual = actual.siguiente; // Avanza al siguiente nodo
         } while (actual != ultimo.siguiente); // Termina cuando vuelve al inicio
-        return contador;
+        return contador;*/
     }
 
     // ACTIVIDAD NRO 2: Metodo buscar un elemento

@@ -3,10 +3,12 @@ package Problemas;
 public class ListaDoble<T extends Comparable<T>> {
     private NodoDoble<T> cabeza;
     private NodoDoble<T> cola;
+    private int contador;
 
     public ListaDoble() {
         this.cabeza = null;
         this.cola = null;
+        this.contador = 0;
     }
 
     // 📌 PROBLEMA 1: Insertar al inicio
@@ -14,10 +16,12 @@ public class ListaDoble<T extends Comparable<T>> {
         NodoDoble<T> nuevo = new NodoDoble<>(dato);
         if (cabeza == null) {
             cabeza = cola = nuevo;
+            contador++;
         } else {
             nuevo.siguiente = cabeza;
             cabeza.anterior = nuevo;
             cabeza = nuevo;
+            contador++;
         }
     }
 
@@ -26,10 +30,12 @@ public class ListaDoble<T extends Comparable<T>> {
         NodoDoble<T> nuevo = new NodoDoble<>(dato);
         if (cola == null) {
             cabeza = cola = nuevo;
+            contador++;
         } else {
             cola.siguiente = nuevo;
             nuevo.anterior = cola;
             cola = nuevo;
+            contador++;
         }
     }
 
@@ -69,6 +75,7 @@ public class ListaDoble<T extends Comparable<T>> {
                     actual.anterior.siguiente = actual.siguiente;
                     actual.siguiente.anterior = actual.anterior;
                 }
+                contador--;
                 return;
             }
             actual = actual.siguiente;
@@ -93,6 +100,7 @@ public class ListaDoble<T extends Comparable<T>> {
                     actual.anterior.siguiente = actual.siguiente;
                     actual.siguiente.anterior = actual.anterior;
                 }
+                contador--;
                 return;
             }
             actual = actual.siguiente;
@@ -106,6 +114,7 @@ public class ListaDoble<T extends Comparable<T>> {
         cabeza = cabeza.siguiente;
         if (cabeza != null) cabeza.anterior = null;
         else cola = null;
+        contador--;
     }
 
     // 📌 PROBLEMA 2: Eliminar último elemento
@@ -114,6 +123,7 @@ public class ListaDoble<T extends Comparable<T>> {
         cola = cola.anterior;
         if (cola != null) cola.siguiente = null;
         else cabeza = null;
+        contador--;
     }
     
     // 📌 PROBLEMA 3: Revertir la lista
@@ -150,6 +160,7 @@ public class ListaDoble<T extends Comparable<T>> {
                         if (dup.siguiente != null)
                             dup.siguiente.anterior = dup.anterior;
                     }
+                    contador--;
                 } else {
                     comparador = comparador.siguiente;
                 }
