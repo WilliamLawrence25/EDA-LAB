@@ -1,8 +1,8 @@
-class Nodo {
-    int dato;
-    Nodo siguiente;
+class Nodo<T> {
+    T dato;
+    Nodo<T> siguiente;
 
-    public Nodo(int dato) {
+    public Nodo(T dato) {
         this.dato = dato;
         this.siguiente = null;
     }

@@ -1,13 +1,13 @@
-public class ListaCircular {
-    private Nodo ultimo;
+public class ListaCircular<T> {
+    private Nodo<T> ultimo;
 
     public ListaCircular() {
         this.ultimo = null;
     }  
 
     // Insertar un nodo al final
-    public void insertar(int dato) {
-        Nodo nuevo = new Nodo(dato);
+    public void insertar(T dato) {
+        Nodo<T> nuevo = new Nodo<>(dato);
         if (ultimo == null) {
             ultimo = nuevo;
             ultimo.siguiente = ultimo; // Apunta a sí mismo
@@ -24,7 +24,7 @@ public class ListaCircular {
             System.out.println("Lista vacía.");
             return;
         }
-        Nodo actual = ultimo.siguiente; // Comienza desde el primer nodo
+        Nodo<T> actual = ultimo.siguiente; // Comienza desde el primer nodo
         do {
             System.out.print(actual.dato + " -> ");
             actual = actual.siguiente; // Avanza al siguiente nodo
@@ -33,12 +33,12 @@ public class ListaCircular {
     }
 
     // ACTIVIDAD NRO 1: Metodo para contar elementos
-    public int contarElementos() {
+    public int contar() {
         if (ultimo == null) {
             return 0; // Lista vacía
         }
         int contador = 0;
-        Nodo actual = ultimo.siguiente; // Comienza desde el primer nodo
+        Nodo<T> actual = ultimo.siguiente; // Comienza desde el primer nodo
         do {
             contador++;
             actual = actual.siguiente; // Avanza al siguiente nodo
@@ -47,11 +47,11 @@ public class ListaCircular {
     }
 
     // ACTIVIDAD NRO 2: Metodo buscar un elemento
-    public boolean buscar(int dato) {
+    public boolean buscar(T dato) {
         if (ultimo == null) {
             return false; // Lista vacía
         }
-        Nodo actual = ultimo.siguiente; // Comienza desde el primer nodo
+        Nodo<T> actual = ultimo.siguiente; // Comienza desde el primer nodo
         do {
             if (actual.dato == dato) {
                 return true; // Elemento encontrado
@@ -61,6 +61,7 @@ public class ListaCircular {
         return false; // Elemento no encontrado
     }
 
-    
+    // ACTIVIDAD NRO 3: Metodo para aceptar datos tipo String (usando generics)
+    // - Para esta parte generalizamos la clase Nodo y ListaCircular para aceptar cualquier tipo de dato
 
 }
