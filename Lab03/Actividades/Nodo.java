@@ -1,3 +1,4 @@
+package Actividades;
 class Nodo<T> {
     T dato;
     Nodo<T> siguiente;
