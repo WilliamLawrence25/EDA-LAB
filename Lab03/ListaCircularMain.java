@@ -1,28 +1,25 @@
 public class ListaCircularMain {
     public static void main(String[] args) {
-        ListaCircular lista = new ListaCircular();
+        ListaCircular<Integer> listaEnteros = new ListaCircular<>();
         
-        System.out.println("Insertando elementos...");
-        lista.insertar(10);
-        lista.insertar(20);
-        lista.insertar(30);
-        lista.mostrar();
-        /* 
-        System.out.println("Eliminando 20...");
-        lista.eliminar(20);
-        lista.mostrar();
+        System.out.println("\n Lista con Enteros:");
+        listaEnteros.insertar(10);
+        listaEnteros.insertar(20);
+        listaEnteros.insertar(30);
+        listaEnteros.mostrar();
+        System.out.println("Cantidad de elementos: " + listaEnteros.contar());
+        System.out.println("¿Está el 20? " + listaEnteros.buscar(20));
+        System.out.println("¿Está el 40? " + listaEnteros.buscar(40));
+
+        System.out.println("\nLista con Strings:");
+        ListaCircular<String> listaStrings = new ListaCircular<>();
+        listaStrings.insertar("Eula");
+        listaStrings.insertar("Cartethyia");
+        listaStrings.insertar("Jinhsi");
+        listaStrings.mostrar();
+        System.out.println("Cantidad de elementos: " + listaStrings.contar());
+        System.out.println("¿Está 'Eula'? " + listaStrings.buscar("Eula"));
+        System.out.println("¿Está 'Cartethya'? " + listaStrings.buscar("Camellya"));
         
-        System.out.println("Eliminando 10...");
-        lista.eliminar(10);
-        lista.mostrar();
-
-        System.out.println("Eliminando 30...");
-        lista.eliminar(30);
-        lista.mostrar();
-
-        System.out.println("Insertando de nuevo...");
-        lista.insertar(100);
-        lista.mostrar();*/
     }
-    
 }
