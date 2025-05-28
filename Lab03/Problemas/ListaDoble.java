@@ -94,4 +94,20 @@ public class ListaDoble<T extends Comparable<T>> {
         else cabeza = null;
     }
     
+    // 📌 Problema 3: Revertir la lista
+    public void invertir() {
+        NodoDoble<T> actual = cabeza;
+        NodoDoble<T> temporal = null;
+
+        while (actual != null) {
+            temporal = actual.anterior;
+            actual.anterior = actual.siguiente;
+            actual.siguiente = temporal;
+            actual = actual.anterior;
+        }
+
+        if (temporal != null) {
+            cabeza = temporal.anterior;
+        }
+    }
 }
