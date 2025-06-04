@@ -77,10 +77,19 @@ public class BST<T extends Comparable<T>> {
     public String son(T value) {
         Node<T> node = searchRec(root, value);
         if (node == null) return "Nodo no encontrado";
-        if (node.getLeft() != null && node.getRight() != null) {
-            String son = node.getLeft().getData() + ", " + node.getRight().getData();
-            return son;
-        } return "No tiene hijos";
+
+        boolean tieneIzq = node.getLeft() != null;
+        boolean tieneDer = node.getRight() != null;
+
+        if (tieneIzq && tieneDer) {
+            return node.getLeft().getData() + ", " + node.getRight().getData();
+        } else if (tieneIzq) {
+            return node.getLeft().getData().toString();
+        } else if (tieneDer) {
+            return node.getRight().getData().toString();
+        } else {
+            return "No tiene hijos";
+        }
     }
 
 

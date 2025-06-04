@@ -44,9 +44,10 @@ public class Node<T extends Comparable<T>> {
             // Insertar a la derecha
             if(this.right == null) {
                 right = new Node<T>(newData);
+                right.setParent(this);
             } else {
                 this.right.insertRec(newData);
-                right.setParent(this);
+                
             }
         }
     }
