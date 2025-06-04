@@ -3,7 +3,7 @@ package Lab04;
 public class Main {
     
     public static void main(String[] args){
-        String word = "Changli";
+        String word = "Cartethyia";
         BST<Integer> bst = new BST<>();
 
         System.out.print("Entered word: ");
@@ -24,7 +24,7 @@ public class Main {
         int searchParent = 110;
         System.out.println("Padre de '" + searchParent + "': " + bst.parent(searchParent));
         int searchSon = 104;
-        System.out.println("Hijo de '" + searchSon + "': " + bst.son(searchSon));
+        System.out.println("Hijos de '" + searchSon + "': " + bst.son(searchSon));
 
         bst.visualize();
 

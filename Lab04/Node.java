@@ -32,7 +32,8 @@ public class Node<T extends Comparable<T>> {
     }
 
     public void insertRec(T newData){
-        if(newData.compareTo(this.data) < 0){
+        int cmp = newData.compareTo(this.data);
+        if(cmp < 0){
             // Insertar a la izquierda
             if(this.left == null){
                 left = new Node<>(newData);
@@ -40,20 +41,15 @@ public class Node<T extends Comparable<T>> {
             }else{
                 this.left.insertRec(newData);
             }
-        } else {
+        } else if (cmp > 0){
             // Insertar a la derecha
             if(this.right == null) {
                 right = new Node<T>(newData);
                 right.setParent(this);
             } else {
                 this.right.insertRec(newData);
-                
             }
         }
-    }
-    
-    public int compareTo(T other){
-        return this.data.compareTo(other);
     }
     
 }

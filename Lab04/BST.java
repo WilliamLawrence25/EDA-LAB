@@ -66,12 +66,13 @@ public class BST<T extends Comparable<T>> {
         return min;
     }
 
-    public T parent(T value) {
+    public String parent(T value) {
         Node<T> node = searchRec(root, value);
+        if (node == null) return "Nodo no encontrado";
         if (node != null && node.getParent() != null) {
-            return node.getParent().getData();
+            return node.getParent().getData().toString();
         }
-        return null;
+        return "No tiene padre";
     }
 
     public String son(T value) {
@@ -95,7 +96,7 @@ public class BST<T extends Comparable<T>> {
 
     public void visualize() {
         System.setProperty("org.graphstream.ui", "swing");
-        Graph graph = new SingleGraph("Árbol BST");
+        Graph graph = new SingleGraph("BST");
         
         String styleSheet =
             "node {" +
@@ -121,28 +122,28 @@ public class BST<T extends Comparable<T>> {
         graph.display();
     }
 
-    private void addNodesAndEdges(Graph graph, Node<T> actual, Node<T> padre) {
-        String actualId = actual.getData().toString();
+    private void addNodesAndEdges(Graph graph, Node<T> current, Node<T> parent) {
+        String currentID = current.getData().toString();
 
-        if (graph.getNode(actualId) == null) {
-            org.graphstream.graph.Node nodeGraph = graph.addNode(actualId);
-            nodeGraph.setAttribute("ui.label", actualId);
+        if (graph.getNode(currentID) == null) {
+            org.graphstream.graph.Node nodeGraph = graph.addNode(currentID);
+            nodeGraph.setAttribute("ui.label", currentID);
         }
 
-        if (padre != null) {
-            String padreId = padre.getData().toString();
-            String edgeId = padreId + "-" + actualId;
+        if (parent != null) {
+            String padreId = parent.getData().toString();
+            String edgeId = padreId + "-" + currentID;
             if (graph.getEdge(edgeId) == null) {
-                graph.addEdge(edgeId, padreId, actualId, true);
+                graph.addEdge(edgeId, padreId, currentID, true);
             }
         }
 
-        if (actual.getLeft() != null) {
-            addNodesAndEdges(graph, actual.getLeft(), actual);
+        if (current.getLeft() != null) {
+            addNodesAndEdges(graph, current.getLeft(), current);
         }
 
-        if (actual.getRight() != null) {
-            addNodesAndEdges(graph, actual.getRight(), actual);
+        if (current.getRight() != null) {
+            addNodesAndEdges(graph, current.getRight(), current);
         }
     }
 
