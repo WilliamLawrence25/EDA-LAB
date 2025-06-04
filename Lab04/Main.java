@@ -1,12 +1,9 @@
 package Lab04;
 
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.SingleGraph;
-
 public class Main {
     
     public static void main(String[] args){
-        String word = "Cartethyia";
+        String word = "Changli";
         BST<Integer> bst = new BST<>();
 
         System.out.print("Entered word: ");
@@ -17,20 +14,20 @@ public class Main {
 
         bst.printInOrder();
 
-        //bst.graficar();     // Muestra el árbol visual
+        char search = 'h';
+        boolean found = bst.search((int)search) != null;
+        System.out.println("Buscar '" + search + "': " + found);
 
-        Graph graph = new SingleGraph("Tutorial 1");
-        graph.addNode("A" );
-        graph.addNode("B" );
-        graph.addNode("C" );
-        graph.addNode("Z");
-        graph.addEdge("AB", "A", "B");
-        graph.addEdge("BC", "B", "C");
-        graph.addEdge("CA", "C", "A");
-        graph.addEdge("AZ", "A", "Z");
-        graph.addNode("WAAA");
-        System.setProperty("org.graphstream.ui", "swing"); 
-        graph.display();
+        System.out.println("Max: " + bst.getMax().getData());
+        System.out.println("Min: " + bst.getMin().getData());
+
+        int searchParent = 110;
+        System.out.println("Padre de '" + searchParent + "': " + bst.parent(searchParent));
+        int searchSon = 104;
+        System.out.println("Hijo de '" + searchSon + "': " + bst.son(searchSon));
+
+        bst.visualize();
+
 
 
     }

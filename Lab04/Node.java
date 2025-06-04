@@ -51,24 +51,8 @@ public class Node<T extends Comparable<T>> {
         }
     }
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     public int compareTo(T other){
         return this.data.compareTo(other);
     }
     
-    
-
 }
