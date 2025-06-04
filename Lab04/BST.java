@@ -18,7 +18,28 @@ public class BST<T extends Comparable<T>> {
         if (root == null) {
             root = new Node<>(data);
         } else {
-            root.insertRec(data);
+            insertRec(root, data);
+        }
+    }
+    private void insertRec(Node<T> current, T newData) {
+        int cmp = newData.compareTo(current.getData());
+        
+        if (cmp < 0) {
+            if (current.getLeft() == null) {
+                Node<T> newNode = new Node<>(newData);
+                current.setLeft(newNode);
+                newNode.setParent(current);
+            } else {
+                insertRec(current.getLeft(), newData);
+            }
+        } else if (cmp > 0) {
+            if (current.getRight() == null) {
+                Node<T> newNode = new Node<>(newData);
+                current.setRight(newNode);
+                newNode.setParent(current);
+            } else {
+                insertRec(current.getRight(), newData);
+            }
         }
     }
 
