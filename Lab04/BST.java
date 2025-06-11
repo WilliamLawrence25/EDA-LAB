@@ -121,15 +121,15 @@ public class BST<T extends Comparable<T>> {
         
         String styleSheet =
             "node {" +
-            "   size: 40px, 40px;" +
+            "   size: 50px, 50px;" +
             "   fill-color: #66CCFF;" +
             "   stroke-mode: plain;" +
-            "   stroke-color: black;" +
             "   text-size: 24;" +
             "   text-color: black;" +
             "   text-alignment: center;" +
+            "   text-style: bold;" +
             "   text-background-mode: rounded-box;" +
-            "   text-background-color: white;" +
+            "   text-background-color: #66CCFF;" +
             "}" +
             "edge {" +
             "   fill-color: #444;" +
