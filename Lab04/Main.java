@@ -14,7 +14,7 @@ public class Main {
 
         bst.printInOrder();
 
-        char search = 'h';
+        char search = 'H';
         boolean found = bst.search((int)search) != null;
         System.out.println("Buscar '" + search + "': " + found);
 
@@ -23,10 +23,14 @@ public class Main {
 
         int searchParent = 110;
         System.out.println("Padre de '" + searchParent + "': " + bst.parent(searchParent));
-        int searchSon = 104;
+        int searchSon = 72;
         System.out.println("Hijos de '" + searchSon + "': " + bst.son(searchSon));
 
-        bst.visualize();
+        BST<Character> bstString = new BST<>();
+        for(int i: word.toCharArray()) {
+            bstString.insert((char)i);
+        }
+        bstString.visualize();
 
     }
     
