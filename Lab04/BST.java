@@ -60,12 +60,12 @@ public class BST<T extends Comparable<T>> {
     public Boolean search(T data) {
         return searchRec(root, data) != null;
     }
-    private Node<T> searchRec(Node<T> node, T value){
-        if(node == null || node.getData().equals(value)) return node;
-        if(value.compareTo(node.getData()) < 0) {
-            return searchRec(node.getLeft(), value);
+    private Node<T> searchRec(Node<T> current, T value){
+        if(current == null || current.getData().equals(value)) return current;
+        if(value.compareTo(current.getData()) < 0) {
+            return searchRec(current.getLeft(), value);
         } else {
-            return searchRec(node.getRight(), value);
+            return searchRec(current.getRight(), value);
         }
     }
 
