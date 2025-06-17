@@ -3,7 +3,7 @@ package Lab05;
 public class Main {
     
     public static void main(String[] args){
-        String word = "CARTETHYIA";
+        String word = "WILLIAM";
         AVL<Integer> bst = new AVL<>();
 
         System.out.print("Entered word: ");
@@ -14,8 +14,8 @@ public class Main {
 
         bst.printInOrder();
 
-        char search = 'H';
-        boolean found = bst.search((int)search) != null;
+        char search = 'M';
+        boolean found = bst.search((int)search);
         System.out.println("Buscar '" + search + "': " + found);
 
         System.out.println("Max: " + bst.getMax().getData());
