@@ -18,25 +18,25 @@ public class AVL<T extends Comparable<T>> {
         root = insertRec(root, data, null);
     }
 
-    private AVLNode<T> insertRec(AVLNode<T> node, T data, AVLNode<T> parent) {
-        if (node == null) {
+    private AVLNode<T> insertRec(AVLNode<T> currect, T data, AVLNode<T> parent) {
+        if (currect == null) {
             AVLNode<T> newNode = new AVLNode<>(data);
             newNode.setParent(parent);
             return newNode;
         }
 
-        if (data.compareTo(node.getData()) < 0) {
-            AVLNode<T> left = insertRec(node.getLeft(), data, node);
-            node.setLeft(left);
-        } else if (data.compareTo(node.getData()) > 0) {
-            AVLNode<T> right = insertRec(node.getRight(), data, node);
-            node.setRight(right);
+        if (data.compareTo(currect.getData()) < 0) {
+            AVLNode<T> left = insertRec(currect.getLeft(), data, currect);
+            currect.setLeft(left);
+        } else if (data.compareTo(currect.getData()) > 0) {
+            AVLNode<T> right = insertRec(currect.getRight(), data, currect);
+            currect.setRight(right);
         } else {
-            return node; // No duplicados
+            return currect; // No duplicados
         }
 
-        updateHeight(node);
-        return balance(node);
+        updateHeight(currect);
+        return balance(currect);
     }
 
     private void updateHeight(AVLNode<T> node) {
@@ -49,25 +49,25 @@ public class AVL<T extends Comparable<T>> {
         return (node == null) ? 0 : node.getHeight();
     }
 
-    private int getBalance(AVLNode<T> node) {
-        return (node == null) ? 0 : height(node.getLeft()) - height(node.getRight());
+    private int fe(AVLNode<T> node) {
+        return height(node.getRight()) - height(node.getLeft());
     }
 
     private AVLNode<T> balance(AVLNode<T> node) {
-        int balance = getBalance(node);
+        int balance = fe(node);
 
         if (balance > 1) {
-            if (getBalance(node.getLeft()) < 0) {
-                node.setLeft(rotateLeft(node.getLeft()));
-            }
-            return rotateRight(node);
-        }
-
-        if (balance < -1) {
-            if (getBalance(node.getRight()) > 0) {
+            if (fe(node.getRight()) < 0) {
                 node.setRight(rotateRight(node.getRight()));
             }
             return rotateLeft(node);
+        }
+
+        if (balance < -1) {
+            if (fe(node.getLeft()) > 0) {
+                node.setLeft(rotateLeft(node.getLeft()));
+            }
+            return rotateRight(node);
         }
 
         return node;
@@ -75,12 +75,11 @@ public class AVL<T extends Comparable<T>> {
 
     private AVLNode<T> rotateRight(AVLNode<T> y) {
         AVLNode<T> x = y.getLeft();
-        AVLNode<T> T2 = x.getRight();
 
         x.setRight(y);
-        y.setLeft(T2);
+        y.setLeft(x.getRight());
 
-        if (T2 != null) T2.setParent(y);
+        if (x.getRight() != null) x.getRight().setParent(y);
         x.setParent(y.getParent());
         y.setParent(x);
 
@@ -92,12 +91,11 @@ public class AVL<T extends Comparable<T>> {
 
     private AVLNode<T> rotateLeft(AVLNode<T> x) {
         AVLNode<T> y = x.getRight();
-        AVLNode<T> T2 = y.getLeft();
 
         y.setLeft(x);
-        x.setRight(T2);
+        x.setRight(y.getLeft());
 
-        if (T2 != null) T2.setParent(x);
+        if (y.getLeft() != null) y.getLeft().setParent(x);
         y.setParent(x.getParent());
         x.setParent(y);
 
@@ -172,7 +170,8 @@ public class AVL<T extends Comparable<T>> {
         if (tieneIzq && tieneDer) {
             return node.getLeft().getData() + ", " + node.getRight().getData();
         } else if (tieneIzq) {
-            return node.getLeft().getData().toString();
+            return Character.toString((char)node.getLeft().getData());
+            //return node.getLeft().getData().toString();
         } else if (tieneDer) {
             return node.getRight().getData().toString();
         } else {
