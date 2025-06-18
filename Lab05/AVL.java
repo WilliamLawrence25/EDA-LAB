@@ -1,5 +1,8 @@
 package Lab05;
 
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
+
 public class AVL<T extends Comparable<T>> {
     private AVLNode<T> root;
 
@@ -12,52 +15,96 @@ public class AVL<T extends Comparable<T>> {
     }
 
     public void insert(T data){
-        if (root == null) {
-            root = new AVLNode<>(data);
-        } else {
-            insertRec(root, data);
-        }
+        root = insertRec(root, data, null);
     }
-    private void insertRec(AVLNode<T> current, T newData) {
-        int cmp = newData.compareTo(current.getData());
 
-        if (cmp < 0) {
-            if(current.getLeft() == null) {
-                AVLNode<T> newNode = new AVLNode<>(newData);
-            } else {
-                insertRec(current.getLeft(), newData);
-                
-            }
+    private AVLNode<T> insertRec(AVLNode<T> node, T data, AVLNode<T> parent) {
+        if (node == null) {
+            AVLNode<T> newNode = new AVLNode<>(data);
+            newNode.setParent(parent);
+            return newNode;
         }
-        else if (cmp > 0) {
-            if(current.getRight() == null) {
-                AVLNode<T> newNode = new AVLNode<>(newData);
-            } else {
-                insertRec(current.getRight(), newData);
-            }
-        } 
 
-        /*
-        if (cmp < 0) {
-            if (current.getLeft() == null) {
-                AVLNode<T> newNode = new AVLNode<>(newData);
-                current.setLeft(newNode);
-                newNode.setParent(current);
-            } else {
-                insertRec(current.getLeft(), newData);
-            }
-        } else if (cmp > 0) {
-            if (current.getRight() == null) {
-                AVLNode<T> newNode = new AVLNode<>(newData);
-                current.setRight(newNode);
-                newNode.setParent(current);
-            } else {
-                insertRec(current.getRight(), newData);
-            }
+        if (data.compareTo(node.getData()) < 0) {
+            AVLNode<T> left = insertRec(node.getLeft(), data, node);
+            node.setLeft(left);
+        } else if (data.compareTo(node.getData()) > 0) {
+            AVLNode<T> right = insertRec(node.getRight(), data, node);
+            node.setRight(right);
+        } else {
+            return node; // No duplicados
         }
-        */
-        
-        
+
+        updateHeight(node);
+        return balance(node);
+    }
+
+    private void updateHeight(AVLNode<T> node) {
+        int leftHeight = height(node.getLeft());
+        int rightHeight = height(node.getRight());
+        node.setHeight(1 + Math.max(leftHeight, rightHeight));
+    }
+
+    private int height(AVLNode<T> node) {
+        return (node == null) ? 0 : node.getHeight();
+    }
+
+    private int getBalance(AVLNode<T> node) {
+        return (node == null) ? 0 : height(node.getLeft()) - height(node.getRight());
+    }
+
+    private AVLNode<T> balance(AVLNode<T> node) {
+        int balance = getBalance(node);
+
+        if (balance > 1) {
+            if (getBalance(node.getLeft()) < 0) {
+                node.setLeft(rotateLeft(node.getLeft()));
+            }
+            return rotateRight(node);
+        }
+
+        if (balance < -1) {
+            if (getBalance(node.getRight()) > 0) {
+                node.setRight(rotateRight(node.getRight()));
+            }
+            return rotateLeft(node);
+        }
+
+        return node;
+    }
+
+    private AVLNode<T> rotateRight(AVLNode<T> y) {
+        AVLNode<T> x = y.getLeft();
+        AVLNode<T> T2 = x.getRight();
+
+        x.setRight(y);
+        y.setLeft(T2);
+
+        if (T2 != null) T2.setParent(y);
+        x.setParent(y.getParent());
+        y.setParent(x);
+
+        updateHeight(y);
+        updateHeight(x);
+
+        return x;
+    }
+
+    private AVLNode<T> rotateLeft(AVLNode<T> x) {
+        AVLNode<T> y = x.getRight();
+        AVLNode<T> T2 = y.getLeft();
+
+        y.setLeft(x);
+        x.setRight(T2);
+
+        if (T2 != null) T2.setParent(x);
+        y.setParent(x.getParent());
+        x.setParent(y);
+
+        updateHeight(x);
+        updateHeight(y);
+
+        return y;
     }
 
     public void printInOrder() {
@@ -77,6 +124,7 @@ public class AVL<T extends Comparable<T>> {
     public Boolean search(T data) {
         return searchRec(root, data) != null;
     }
+
     private AVLNode<T> searchRec(AVLNode<T> current, T value){
         if(current == null || current.getData().equals(value)) return current;
         if(value.compareTo(current.getData()) < 0) {
@@ -107,10 +155,11 @@ public class AVL<T extends Comparable<T>> {
     public String parent(T value) {
         AVLNode<T> node = searchRec(root, value);
         if (node == null) return "Nodo no encontrado";
-        if (node != null && node.getParent() != null) {
+        if (node.getParent() == null) {
+            return "Not tiene padre";
+        } else {
             return node.getParent().getData().toString();
         }
-        return "No tiene padre";
     }
 
     public String son(T value) {
@@ -130,65 +179,56 @@ public class AVL<T extends Comparable<T>> {
             return "No tiene hijos";
         }
     }
+    public void visualize() {
+        System.setProperty("org.graphstream.ui", "swing");
+        Graph graph = new SingleGraph("BST");
+        
+        String styleSheet =
+            "node {" +
+            "   size: 50px, 50px;" +
+            "   fill-color: #66CCFF;" +
+            "   stroke-mode: plain;" +
+            "   text-size: 24;" +
+            "   text-color: black;" +
+            "   text-alignment: center;" +
+            "   text-style: bold;" +
+            "   text-background-mode: rounded-box;" +
+            "   text-background-color: #66CCFF;" +
+            "}" +
+            "edge {" +
+            "   fill-color: #444;" +
+            "}";
+        graph.setAttribute("ui.stylesheet", styleSheet);
 
-    private void updateHeight(AVLNode<T> node) {
-        node.height = 1 + Math.max(height(node.left), height(node.right));
-    }
-
-    private int getBalance(AVLNode<T> node) {
-        return node == null ? 0 : node.getLeft().getHeight() - node.getRight().getHeight();
-    }
-    
-    private AVLNode<T> balance(AVLNode<T> node) {
-        int balance = getBalance(node);
-
-        if (balance > 1) {
-            if (getBalance(node.left) < 0)
-                node.left = rotateLeft(node.left);
-            return rotateRight(node);
+        if (root != null) {
+            addNodesAndEdges(graph, root, null);
         }
 
-        if (balance < -1) {
-            if (getBalance(node.right) > 0)
-                node.right = rotateRight(node.right);
-            return rotateLeft(node);
+        graph.display();
+    }
+
+    private void addNodesAndEdges(Graph graph, AVLNode<T> current, AVLNode<T> parent) {
+        String currentID = current.getData().toString();
+
+        if (graph.getNode(currentID) == null) {
+            org.graphstream.graph.Node nodeGraph = graph.addNode(currentID);
+            nodeGraph.setAttribute("ui.label", currentID);
         }
 
-        return node;
+        if (parent != null) {
+            String padreId = parent.getData().toString();
+            String edgeId = padreId + "-" + currentID;
+            if (graph.getEdge(edgeId) == null) {
+                graph.addEdge(edgeId, padreId, currentID, true);
+            }
+        }
+
+        if (current.getLeft() != null) {
+            addNodesAndEdges(graph, current.getLeft(), current);
+        }
+
+        if (current.getRight() != null) {
+            addNodesAndEdges(graph, current.getRight(), current);
+        }
     }
-    private AVLNode<T> rotateRight(AVLNode<T> y) {
-        AVLNode<T> x = y.left;
-        AVLNode<T> T2 = x.right;
-
-        x.right = y;
-        y.left = T2;
-
-        if (T2 != null) T2.parent = y;
-
-        x.parent = y.parent;
-        y.parent = x;
-
-        updateHeight(y);
-        updateHeight(x);
-
-        return x;
-    }
-
-    private AVLNode<T> rotateLeft(AVLNode<T> x) {
-        AVLNode<T> y = x.right;
-        AVLNode<T> T2 = y.left;
-
-        y.left = x;
-        x.right = T2;
-
-        if (T2 != null) T2.parent = x;
-
-        y.parent = x.parent;
-        x.parent = y;
-
-        updateHeight(x);
-        updateHeight(y);
-
-        return y;
-    }
-}
+} 
