@@ -75,12 +75,12 @@ public class AVL<T extends Comparable<T>> {
 
     private AVLNode<T> rotateRight(AVLNode<T> y) {
         AVLNode<T> x = y.getLeft();
-        AVLNode<T> T2 = x.getRight();
+        AVLNode<T> s = x.getRight();
 
         x.setRight(y);
-        y.setLeft(T2);
+        y.setLeft(s);
 
-        if (T2 != null) T2.setParent(y);
+        if (s != null) s.setParent(y);
         x.setParent(y.getParent());
         y.setParent(x);
 
@@ -92,12 +92,12 @@ public class AVL<T extends Comparable<T>> {
 
     private AVLNode<T> rotateLeft(AVLNode<T> x) {
         AVLNode<T> y = x.getRight();
-        AVLNode<T> T2 = y.getLeft();
+        AVLNode<T> s = y.getLeft();
 
         y.setLeft(x);
-        x.setRight(T2);
+        x.setRight(s);
 
-        if (T2 != null) T2.setParent(x);
+        if (s != null) s.setParent(x);
         y.setParent(x.getParent());
         x.setParent(y);
 
