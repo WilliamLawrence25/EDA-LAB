@@ -1,8 +1,14 @@
 package Lab06;
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
+import org.graphstream.ui.view.Viewer;
 
 public class BTree {
     private BTreeNode root;
     private int t;
+    private int xOffset = 0;
+    private int ySpacing = 10;
+    private int xSpacing = 10;
 
     public BTree(int t) {
         this.t = t;
@@ -79,6 +85,45 @@ public class BTree {
         System.out.println("\n=== ARBOL B ===");
         if (root != null) {
             root.traverse(0);
+        }
+    }
+
+    public void visualize() {
+        System.setProperty("org.graphstream.ui", "swing");
+        Graph graph = new SingleGraph("B-Tree");
+        graph.setAttribute("ui.stylesheet",
+            "node { fill-color: #4477aa; size-mode: fit; padding: 5px; text-size: 10px; text-color: white; shape: box; }" +
+            "edge { fill-color: #888; }");
+
+        if (root != null) {
+            xOffset = 0;
+            addToGraph(graph, root, "R", null, 0);
+        }
+
+        Viewer viewer = graph.display();
+        viewer.disableAutoLayout();
+    }
+
+    private void addToGraph(Graph graph, BTreeNode node, String nodeId, String parentId, int level) {
+        StringBuilder label = new StringBuilder();
+        for (int i = 0; i < node.n; i++) {
+            label.append(node.keys[i]);
+            if (i < node.n - 1) label.append(" | ");
+        }
+
+        Node graphNode = graph.addNode(nodeId);
+        graphNode.setAttribute("ui.label", label.toString());
+        graphNode.setAttribute("xy", xOffset * 1, -level * 3);
+        xOffset++;
+
+        if (parentId != null) {
+            graph.addEdge(parentId + "->" + nodeId, parentId, nodeId, true);
+        }
+
+        for (int i = 0; i <= node.n; i++) {
+            if (node.children[i] != null) {
+                addToGraph(graph, node.children[i], nodeId + "." + i, nodeId, level + 1);
+            }
         }
     }
 }

@@ -57,5 +57,6 @@ public class Main {
         }
 
         btree.print();
+        btree.visualize();
     }
 }
