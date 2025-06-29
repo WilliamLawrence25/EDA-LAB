@@ -3,7 +3,7 @@ package Lab04;
 public class Main {
     
     public static void main(String[] args){
-        String word = "CARTETHYIA";
+        String word = "CARTETHYIADEIDADXSIEMPRE";
         BST<Integer> bst = new BST<>();
 
         System.out.print("Entered word: ");
