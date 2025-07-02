@@ -19,12 +19,12 @@ public class BTree {
             root = new BTreeNode(t, true);
             root.keys[0] = key;
             root.numKeys = 1;
-        } else {
+        } else { // If the root is full, we need to split it
             if (root.numKeys == 2 * t - 1) {
                 BTreeNode s = new BTreeNode(t, false);
                 s.children[0] = root;
                 s.splitChild(0, root);
-
+                // Insert the new key into the appropriate child
                 int i = (s.keys[0] < key) ? 1 : 0;
                 s.children[i].insertNonFull(key);
 

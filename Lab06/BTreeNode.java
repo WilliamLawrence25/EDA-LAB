@@ -1,11 +1,11 @@
 package Lab06;
 
 public class BTreeNode {
-    int[] keys;
-    BTreeNode[] children;
-    int t;
-    int numKeys;
-    boolean isLeaf;
+    int[] keys; // Array to store keys
+    BTreeNode[] children; // Array to store child pointers
+    int t; // Minimum degree
+    int numKeys; // Current number of keys
+    boolean isLeaf; // Indicates if the node is a leaf
 
     public BTreeNode(int t, boolean isLeaf) {
         this.t = t;
@@ -41,7 +41,7 @@ public class BTreeNode {
 
     public void remove(int key) {
         int idx = findKey(key);
-
+        // If the key is found in this node
         if (idx < numKeys && keys[idx] == key) {
             if (isLeaf) {
                 for (int i = idx + 1; i < numKeys; ++i) keys[i - 1] = keys[i];
@@ -55,10 +55,12 @@ public class BTreeNode {
                 return;
             }
 
+            // If the key is not found, we go to the child node
             boolean flag = (idx == numKeys);
 
             if (children[idx].numKeys < t) fill(idx);
 
+            // If the last child is empty, we go to the previous child
             if (flag && idx > numKeys) {
                 children[idx - 1].remove(key);
             } else {
@@ -153,6 +155,7 @@ public class BTreeNode {
         sibling.numKeys--;
     }
 
+    // Merges two children of this node
     private void merge(int idx) {
         BTreeNode child = children[idx];
         BTreeNode sibling = children[idx + 1];
@@ -176,9 +179,10 @@ public class BTreeNode {
         numKeys--;
     }
 
+    // Inserts a new key into a non-full node
     public void insertNonFull(int key) {
         int i = numKeys - 1;
-
+        // If this node is a leaf, insert the key directly
         if (isLeaf) {
             while (i >= 0 && keys[i] > key) {
                 keys[i + 1] = keys[i];
@@ -186,7 +190,7 @@ public class BTreeNode {
             }
             keys[i + 1] = key;
             numKeys++;
-        } else {
+        } else { // If this node is not a leaf, find the child that will have the new key
             while (i >= 0 && keys[i] > key) i--;
             i++;
             if (children[i].numKeys == 2 * t - 1) {
@@ -201,19 +205,22 @@ public class BTreeNode {
         BTreeNode z = new BTreeNode(t, y.isLeaf);
         z.numKeys = t - 1;
 
+        // Move the last t-1 keys of y to z
         for (int j = 0; j < t - 1; j++) {
             z.keys[j] = y.keys[j + t];
         }
 
+        // If y is not a leaf, move the last t children of y to z
         if (!y.isLeaf) {
             for (int j = 0; j < t; j++) {
                 z.children[j] = y.children[j + t];
             }
         }
 
+        // Reduce the number of keys in y
         for (int j = numKeys; j >= i + 1; j--) children[j + 1] = children[j];
         children[i + 1] = z;
-
+        // Move the middle key of y to this node
         for (int j = numKeys - 1; j >= i; j--) keys[j + 1] = keys[j];
         keys[i] = y.keys[t - 1];
 
@@ -221,6 +228,7 @@ public class BTreeNode {
         numKeys++;
     }
 
+    // Searches for a key in the B-Tree node
     public BTreeNode search(int key) {
         int i = 0;
         while (i < numKeys && key > keys[i]) i++;
