@@ -7,8 +7,8 @@ public class BTree {
     private BTreeNode root;
     private int t;
     private int xOffset = 0;
-    private int ySpacing = 10;
-    private int xSpacing = 10;
+    //private int ySpacing = 10;
+    //private int xSpacing = 10;
 
     public BTree(int t) {
         this.t = t;
