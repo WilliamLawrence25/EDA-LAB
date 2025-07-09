@@ -1,15 +1,16 @@
 package Lab07;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.*;
 import org.jfree.data.category.DefaultCategoryDataset;
-
 import javax.swing.*;
+import java.awt.Color;
+import java.awt.BasicStroke;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 
 public class Main {
     public static void main(String[] args) {
-        int[] grados = {2, 5, 10, 20, 50, 10000};
+        int[] grados = {2, 5, 20, 50, 100, 500, 1000, 2000, 5000, 10000};
         int cantidad = 10000000;
         long[] tiempos = new long[grados.length];
 
@@ -54,6 +55,7 @@ public class Main {
         mostrarGrafico(grados, tiempos, cantidad);
     }
 
+    // Metod to display the lineal graph
     public static void mostrarGrafico(int[] grados, long[] tiempos, int cantidad) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (int i = 0; i < grados.length; i++) {
@@ -66,6 +68,22 @@ public class Main {
                 "Tiempo de inserción (ms)",
                 dataset
         );
+
+        // Personalización visual
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(new Color(245, 245, 255)); // Fondo suave
+        plot.setRangeGridlinePaint(new Color(180, 180, 180)); // Líneas de grilla
+        plot.setOutlinePaint(Color.DARK_GRAY);
+
+        LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+        renderer.setSeriesPaint(0, new Color(33, 147, 176)); // Línea azul moderna
+        renderer.setSeriesStroke(0, new BasicStroke(3.0f));
+        renderer.setSeriesShapesVisible(0, true);
+        renderer.setSeriesShape(0, new java.awt.geom.Ellipse2D.Double(-4, -4, 8, 8)); // Puntos redondos
+
+        plot.setRenderer(renderer);
+
+        chart.setBackgroundPaint(Color.WHITE);
 
         JFrame frame = new JFrame("Comparativa de tiempos de inserción");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
